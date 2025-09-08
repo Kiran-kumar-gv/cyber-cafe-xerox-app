@@ -57,8 +57,24 @@
                     <li>Your document will be ready for printing at our counter</li>
                 </ol>
             </div>
-            <h3>Scan QR Code to Upload from Your Phone</h3>
-<img src="{{ url_for('generate_qrcode') }}" alt="QR Code">
+            <!-- QR Code Section -->
+<div class="card mt-4">
+    <div class="card-header bg-info text-white">
+        <h5 class="card-title mb-0">
+            <i class="fas fa-qrcode me-2"></i>Quick Mobile Upload
+        </h5>
+    </div>
+    <div class="card-body text-center">
+        <img src="{{ url_for('generate_qrcode') }}" 
+             alt="QR Code" 
+             class="img-fluid border" 
+             style="max-width: 200px;"
+             onerror="this.style.display='none';">
+        <p class="text-muted mt-2">
+            Scan this QR code with your phone to upload files directly
+        </p>
+    </div>
+</div>
         </div>
     </div>
 </div>
