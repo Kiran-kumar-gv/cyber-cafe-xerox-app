@@ -197,7 +197,7 @@ from flask import send_file
 def generate_qrcode():
     try:
         # Always point to your live hosted domain
-        upload_url = "https://cyber-cafe-xerox-app.onrender.com/"
+        upload_url = "https://cyber-cafe-xerox-app-7ewr.onrender.com/"
 
         # Generate QR code
         qr = qrcode.QRCode(
