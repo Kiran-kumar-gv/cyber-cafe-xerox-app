@@ -15,8 +15,8 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 ALLOWED_EXTENSIONS = {'pdf', 'docx', 'doc', 'jpg', 'jpeg', 'png', 'gif'}
 
 # Simple admin credentials (in production, use a database)
-ADMIN_USERNAME = 'admin'
-ADMIN_PASSWORD_HASH = generate_password_hash('password123')  # Change this!
+ADMIN_USERNAME = 'ak'
+ADMIN_PASSWORD_HASH = generate_password_hash('123')  # Change this!
 
 # Create uploads directory if it doesn't exist
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -195,16 +195,33 @@ from flask import send_file
 
 @app.route('/qrcode')
 def generate_qrcode():
-    # Generate QR that links to the main upload page
-    upload_url = "https://cyber-cafe-xerox-app.onrender.com"
-    
-    # Create QR code
-    qr = qrcode.make(upload_url)
-    img_io = io.BytesIO()
-    qr.save(img_io, 'PNG')
-    img_io.seek(0)
-
-    return send_file(img_io, mimetype='image/png')
+    try:
+        # Generate QR that links to the main upload page
+        upload_url = "https://cyber-cafe-xerox-app.onrender.com"
+        
+        # Create QR code with specific settings
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(upload_url)
+        qr.make(fit=True)
+        
+        # Create image
+        img = qr.make_image(fill_color="black", back_color="white")
+        
+        # Save to BytesIO with explicit format
+        img_io = io.BytesIO()
+        img.save(img_io, format='PNG')
+        img_io.seek(0)
+        
+        return send_file(img_io, mimetype='image/png')
+        
+    except Exception as e:
+        print(f"QR Code generation error: {str(e)}")
+        return f"Error generating QR code: {str(e)}", 500
 
 if __name__ == '__main__':
     app.run(debug=True)
