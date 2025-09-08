@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Cyber Café Xerox{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="fas fa-tachometer-alt me-2"></i>Admin Dashboard</h2>
+    <div>
+        <span class="badge bg-info me-2">{{ files|length }} files pending</span>
+        <a href="{{ url_for('admin_logout') }}" class="btn btn-outline-danger">
+            <i class="fas fa-sign-out-alt me-1"></i>Logout
+        </a>
+    </div>
+</div>
+
+{% if files %}
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="fas fa-file-alt me-2"></i>Uploaded Files
+        </h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Original Filename</th>
+                        <th>Upload Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr>
+                        <td>
+                            <i class="fas fa-file me-2"></i>
+                            {{ file.original_name }}
+                        </td>
+                        <td>
+                            <small class="text-muted">{{ file.timestamp }}</small>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ url_for('download_file', file_id=file.id) }}" 
+                                   class="btn btn-outline-primary">
+                                    <i class="fas fa-download me-1"></i>Download
+                                </a>
+                                <a href="{{ url_for('mark_processed', file_id=file.id) }}" 
+                                   class="btn btn-outline-success"
+                                   onclick="return confirm('Mark this file as processed?')">
+                                    <i class="fas fa-check me-1"></i>Mark Processed
+                                </a>
+                                <div class="btn-group btn-group-sm">
+    <a href="{{ url_for('preview_file', file_id=file.id) }}" 
+       target="_blank" class="btn btn-outline-secondary">
+        <i class="fas fa-eye me-1"></i>Preview
+    </a>
+    
+</div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info">
+    <i class="fas fa-info-circle me-2"></i>
+    No files uploaded yet. Files will appear here when customers upload documents.
+</div>
+{% endif %}
+{% endblock %}

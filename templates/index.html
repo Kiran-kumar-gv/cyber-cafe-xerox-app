@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Documents - Cyber Café Xerox{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-upload me-2"></i>Upload Your Documents
+                </h3>
+            </div>
+            <div class="card-body">
+                <p class="text-muted mb-4">
+                    Upload your documents for printing. We accept PDF, Word documents, and images.
+                </p>
+                
+                <form method="POST" action="{{ url_for('upload_file') }}" enctype="multipart/form-data" id="uploadForm">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Choose File</label>
+                        <input type="file" class="form-control" id="file" name="file" accept=".pdf,.docx,.doc,.jpg,.jpeg,.png,.gif" required>
+                        <div class="form-text">
+                            Supported formats: PDF, Word (.docx, .doc), Images (.jpg, .jpeg, .png, .gif). Max size: 16MB
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg" id="uploadBtn">
+                            <i class="fas fa-upload me-2"></i>Upload Document
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Progress bar (hidden by default) -->
+                <div class="mt-3" id="progressContainer" style="display: none;">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <small class="text-muted">Uploading your file...</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Instructions Card -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>How it works
+                </h5>
+            </div>
+            <div class="card-body">
+                <ol class="mb-0">
+                    <li>Select your document using the file picker above</li>
+                    <li>Click "Upload Document" to send your file to our system</li>
+                    <li>Wait for the confirmation message</li>
+                    <li>Your document will be ready for printing at our counter</li>
+                </ol>
+            </div>
+            <h3>Scan QR Code to Upload from Your Phone</h3>
+<img src="{{ url_for('generate_qrcode') }}" alt="QR Code">
+        </div>
+    </div>
+</div>
+{% endblock %}
