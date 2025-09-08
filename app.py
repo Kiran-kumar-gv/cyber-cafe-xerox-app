@@ -196,10 +196,10 @@ from flask import send_file
 @app.route('/qrcode')
 def generate_qrcode():
     try:
-        # Generate QR that links to the main upload page
-        upload_url = "https://cyber-cafe-xerox-app.onrender.com"
-        
-        # Create QR code with specific settings
+        # Always point to your live hosted domain
+        upload_url = "https://cyber-cafe-xerox-app.onrender.com/"
+
+        # Generate QR code
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -208,17 +208,16 @@ def generate_qrcode():
         )
         qr.add_data(upload_url)
         qr.make(fit=True)
-        
-        # Create image
+
         img = qr.make_image(fill_color="black", back_color="white")
-        
-        # Save to BytesIO with explicit format
+
+        # Save to BytesIO
         img_io = io.BytesIO()
         img.save(img_io, format='PNG')
         img_io.seek(0)
-        
+
         return send_file(img_io, mimetype='image/png')
-        
+
     except Exception as e:
         print(f"QR Code generation error: {str(e)}")
         return f"Error generating QR code: {str(e)}", 500
