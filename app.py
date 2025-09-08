@@ -196,7 +196,7 @@ from flask import send_file
 @app.route('/qrcode')
 def generate_qrcode():
     # Generate QR that links to the main upload page
-    upload_url = request.url_root.strip('/') + url_for('index')
+    upload_url = "https://cyber-cafe-xerox-app.onrender.com"
     
     # Create QR code
     qr = qrcode.make(upload_url)
