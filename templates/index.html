@@ -5,6 +5,7 @@
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8">
+        <!-- Upload Card -->
         <div class="card shadow">
             <div class="card-header bg-primary text-white">
                 <h3 class="card-title mb-0">
@@ -13,15 +14,23 @@
             </div>
             <div class="card-body">
                 <p class="text-muted mb-4">
-                    Upload your documents for printing. We accept PDF, Word documents, and images.
+                    Upload your documents for printing. We accept PDF, Word documents, text files, and images.
                 </p>
                 
                 <form method="POST" action="{{ url_for('upload_file') }}" enctype="multipart/form-data" id="uploadForm">
                     <div class="mb-3">
                         <label for="file" class="form-label">Choose File</label>
-                        <input type="file" class="form-control" id="file" name="file" accept=".pdf,.docx,.doc,.jpg,.jpeg,.png,.gif" required>
+                        <input 
+                            type="file" 
+                            class="form-control" 
+                            id="file" 
+                            name="file" 
+                            accept=".pdf,.docx,.doc,.txt,.jpg,.jpeg,.png,.gif,.webp,.bmp,.tif,.tiff,.svg,.ico,.jfif,.avif,.heic" 
+                            required
+                        >
                         <div class="form-text">
-                            Supported formats: PDF, Word (.docx, .doc), Images (.jpg, .jpeg, .png, .gif). Max size: 16MB
+                            Supported formats: PDF, Word (.docx, .doc), Text (.txt), and Images (.jpg, .jpeg, .png, .gif, .webp, .bmp, .tiff, .svg, .ico, .jfif, .avif, .heic). 
+                            Max size: 16MB
                         </div>
                     </div>
                     
@@ -32,7 +41,7 @@
                     </div>
                 </form>
                 
-                <!-- Progress bar (hidden by default) -->
+                <!-- Progress bar -->
                 <div class="mt-3" id="progressContainer" style="display: none;">
                     <div class="progress">
                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
@@ -57,19 +66,19 @@
                     <li>Your document will be ready for printing at our counter</li>
                 </ol>
             </div>
-            <!-- QR Code Section -->
-<div class="card mt-4">
-    <div class="card-header">
-        <h5 class="mb-0">
-            <i class="fas fa-qrcode me-2"></i> Upload from Your Phone
-        </h5>
-    </div>
-    <div class="card-body text-center">
-        <p class="text-muted">Scan this QR code to open the upload page on your mobile device.</p>
-        <img src="{{ url_for('generate_qrcode') }}" alt="QR Code" class="img-fluid" style="max-width:200px;">
-    </div>
-</div>
-</div>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-qrcode me-2"></i> Upload from Your Phone
+                </h5>
+            </div>
+            <div class="card-body text-center">
+                <p class="text-muted">Scan this QR code to open the upload page on your mobile device.</p>
+                <img src="{{ url_for('generate_qrcode') }}" alt="QR Code" class="img-fluid" style="max-width:200px;">
+            </div>
         </div>
     </div>
 </div>
